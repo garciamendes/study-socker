@@ -11,14 +11,16 @@ class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(blank=False, null=False)
     finish_at = models.DateTimeField(null=True, blank=True)
-    created_at = models.DateTimeField(default=datetime.now())
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class TaskLike(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid4, editable=False)
+
     task = models.ForeignKey(Task, related_name='likes',
                              on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=datetime.now())
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ['task', 'user']
@@ -46,7 +48,7 @@ class Notification(models.Model):
 
     is_read = models.BooleanField(default=False)
 
-    created_at = models.DateTimeField(default=datetime.now())
+    created_at = models.DateTimeField(auto_now_add=True)
     read_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:

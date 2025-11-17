@@ -1,21 +1,11 @@
-import { useEffect } from "react";
-import { connectNotificationChannel } from "@/core/websocket/notificationChannel";
-import { NotificationEvents } from "@/core/events/notificationEvents";
+import { useContext } from "react";
+import { NotificationContext } from "@/context/notificationContext";
 
 export function useNotifications() {
-  // const add = useNotificationStore((s) => s.addNotification);
-
-  useEffect(() => {
-    const channel = connectNotificationChannel();
-
-    channel.on(NotificationEvents.NEW, (notif) => {
-      console.log(notif);
-      // add({
-      //   id: crypto.randomUUID(),
-      //   message: notif.message,
-      //   taskId: notif.task_id,
-      //   createdAt: new Date(),
-      // });
-    });
-  }, []);
+  const ctx = useContext(NotificationContext);
+  if (!ctx)
+    throw new Error(
+      "useNotificationContext must be used inside <NotificationProvider>"
+    );
+  return ctx;
 }

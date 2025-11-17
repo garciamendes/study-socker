@@ -1,4 +1,3 @@
-import { queryClient } from "@/App";
 import { taskService } from "@/services/task";
 import type { TaskCreateSchemaType } from "@/services/task/type";
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query";

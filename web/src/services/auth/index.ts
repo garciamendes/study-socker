@@ -12,13 +12,6 @@ export class AuthService {
   register(username: string, password: string) {
     return api.post<void>("/api/register", { username, password });
   }
-
-  verify() {
-    console.log("Entrou aqui");
-    return api.post<void>("/api/register", {
-      token: api.getToken?.() as string,
-    });
-  }
 }
 
 export const authService = new AuthService();

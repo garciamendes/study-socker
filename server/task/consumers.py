@@ -33,20 +33,21 @@ class TaskConsumer(AsyncJsonWebsocketConsumer):
 
 class NotificationConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
-        self.user_id = self.scope["user"].id
+        user = self.scope["user"]
 
-        if not self.user_id:
-            return await self.close()
+        if not user.is_authenticated:
+            await self.close()
 
+        self.user_id = user.id
         await self.channel_layer.group_add(
-            f"user_{self.user_id}", self.channel_name
+            'notification', self.channel_name
         )
 
         await self.accept()
 
     async def disconnect(self, close_code):
         await self.channel_layer.group_discard(
-            f"user_{self.user_id}", self.channel_name
+            'notification', self.channel_name
         )
 
     async def notification_event(self, event):

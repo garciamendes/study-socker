@@ -1,3 +1,3 @@
 export enum NotificationEvents {
-  NEW = "task_liked",
+  TASK_LIKED = "task_liked",
 }

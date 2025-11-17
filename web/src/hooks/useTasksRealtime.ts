@@ -56,11 +56,5 @@ export function useTasksRealtime() {
     // registrar listeners
     channel.on(TaskEvents.CREATED, handleCreated);
     channel.on(TaskEvents.UPDATED, handleUpdated);
-
-    return () => {
-      // remover listeners ao desmontar
-      channel.off(TaskEvents.CREATED, handleCreated);
-      channel.off(TaskEvents.UPDATED, handleUpdated);
-    };
   }, []);
 }
